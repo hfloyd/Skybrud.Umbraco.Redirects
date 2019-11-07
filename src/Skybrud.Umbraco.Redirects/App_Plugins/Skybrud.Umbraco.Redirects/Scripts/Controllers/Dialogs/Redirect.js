@@ -26,7 +26,8 @@
             id: $scope.model.redirect.linkId,
             key: $scope.model.redirect.linkKey,
             url: $scope.model.redirect.linkUrl,
-            type: $scope.model.redirect.linkMode
+            type: $scope.model.redirect.linkMode,
+            name: $scope.model.redirect.linkName
         };
 
         $scope.model.hiddenProperties.push({

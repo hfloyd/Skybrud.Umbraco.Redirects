@@ -1,6 +1,9 @@
 ﻿.SkybrudUmbracoRedirects .input {
   display: flex;
 }
+.SkybrudUmbracoRedirects .btn + .btn {
+  margin-left: 10px;
+}
 .SkybrudUmbracoRedirects .input > .hest {
   margin-bottom: 10px;
   display: block;
@@ -35,9 +38,12 @@
 .SkybrudUmbracoRedirects .umb-table-cell.col-destination {
   flex-grow: 4;
 }
-.SkybrudUmbracoRedirects .umb-table-cell.col-actions a {
-  padding: 0 10px;
-  font-size: 12px;
+.SkybrudUmbracoRedirects .umb-table-cell.col-actions a.btn {
+  padding: 3px 10px;
+  font-size: 14px;
+}
+.SkybrudUmbracoRedirects .umb-table-cell.col-actions .btn + .btn {
+  margin-left: 5px;
 }
 .SkybrudUmbracoRedirects .umb-table-row {
   cursor: default;
@@ -88,6 +94,8 @@
 }
 .SkybrudUmbracoRedirects .umb-table {
   background: #fff;
+  border: 1px solid #E9E9EB;
+  box-shadow: none;
 }
 .SkybrudUmbracoRedirects .umb-table-body .umb-table-row.-no-hover:hover {
   background-color: #fff;
@@ -97,7 +105,7 @@
   background-color: #f8f8f8;
 }
 .SkybrudUmbracoRedirects .umb-table-foot .umb-table-row {
-  border-top: 1px solid #d9d9d9;
+  border-top: 1px solid #E9E9EB;
 }
 .SkybrudUmbracoRedirects .umb-table-foot .umb-table-cell:first-of-type {
   padding: initial;
@@ -348,4 +356,13 @@
   color: #fff;
   border-color: #c83125;
   background-color: #c83125;
+}
+.umb-group-panel .SkybrudUmbracoRedirects {
+  bbackground: red;
+}
+.umb-group-panel .SkybrudUmbracoRedirects .umb-editor-sub-header {
+  background: none;
+  padding: 0;
+  border: 0;
+  margin: 0;
 }

@@ -1,4 +1,4 @@
-﻿angular.module('umbraco').controller('SkybrudUmbracoRedirects.PropertyEditor.Controller', function ($scope, $routeParams, $http, $q, $timeout, dialogService, notificationsService, skybrudRedirectsService) {
+﻿angular.module('umbraco').controller('SkybrudUmbracoRedirects.PropertyEditor.Controller', function ($scope, $routeParams, $http, $q, $timeout, notificationsService, skybrudRedirectsService) {
 
     $scope.route = $routeParams;
     $scope.redirects = [];
@@ -11,12 +11,49 @@
     $scope.showTitle = $scope.model.config !== '1';
 
     // If we're neither in the content or media section, we stop further execution (eg. property editor preview)
-    if ($scope.type != 'content' && $scope.type != 'media') return;
+    if ($scope.type !== "content" && $scope.type !== "media") return;
+
+    // Get information about the current page
+    $scope.current = (function () {
+        var s = $scope.$parent;
+        for (var i = 0; i < 15; i++) {
+            if (s.content && s.content.udi) return s.content;
+            s = s.$parent;
+        }
+        return null;
+    })();
+
+
+    console.log($scope.current);
+
+
+
 
     $scope.addRedirect = function () {
+
+        var redirect = {
+            url: "",
+            link: {
+	            id: $scope.current.id,
+	            udi: $scope.current.udi,
+	            name: $scope.current.variants[0].name,
+	            url: $scope.current.urls[0].text
+            },
+            linkId: $scope.current.id,
+            linkUdi: $scope.current.udi,
+            linkName: $scope.current.variants[0].name,
+            linkUrl: $scope.current.urls[0].text,
+            permanent: false,
+            regex: false,
+            forward: false
+        };
+
+        console.log("redirect: ", redirect);
+
+
         if ($scope.type == 'content') {
             skybrudRedirectsService.addRedirect({
-                content: $scope.$parent.$parent.$parent.content,
+                redirect: redirect,
                 hideRootNodeOption: $scope.model.config.hideRootNodeOption,
                 callback: function () {
                     $scope.updateList();

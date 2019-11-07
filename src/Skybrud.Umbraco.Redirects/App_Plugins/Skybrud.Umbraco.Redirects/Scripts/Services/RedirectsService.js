@@ -77,6 +77,7 @@
             if (typeof options === "function") options = { callback: options };
 
             editorService.open({
+	            redirect: options.redirect,
                 size: "small",
                 view: "/App_Plugins/Skybrud.Umbraco.Redirects/Views/Dialogs/Redirect.html",
                 options: options,

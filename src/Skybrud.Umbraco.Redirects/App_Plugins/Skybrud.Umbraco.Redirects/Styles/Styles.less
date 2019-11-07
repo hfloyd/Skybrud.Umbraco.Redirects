@@ -6,6 +6,10 @@
         display: flex;
     }
 
+    .btn + .btn {
+        margin-left: 10px;
+    }
+
     .input > .hest {
         margin-bottom: 10px;
         display: block;
@@ -50,9 +54,13 @@
     }
 
     .umb-table-cell.col-actions {
-        a {
-            padding: 0 10px;
-            font-size: 12px;
+        a.btn {
+            padding: 3px 10px;
+            font-size: 14px;
+        }
+
+        .btn + .btn {
+            margin-left: 5px;
         }
     }
 
@@ -288,3 +296,31 @@
         background-color: lighten(#872119, 15%);
     }
 }
+
+
+
+
+
+.umb-group-panel .SkybrudUmbracoRedirects {
+    bbackground: red;
+
+    .umb-editor-sub-header {
+        background: none;
+        padding: 0;
+        border: 0;
+        margin: 0;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

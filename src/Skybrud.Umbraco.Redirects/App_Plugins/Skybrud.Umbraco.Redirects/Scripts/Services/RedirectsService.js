@@ -4,6 +4,45 @@
 
         parseUmbracoLink: function (e) {
 
+            var url = e.url;
+            var query = null;
+            var fragment = null;
+
+            // Isolate the fragment if specified in the URL
+            var pos1 = url.indexOf("#");
+            if (pos1 >= 0) {
+                fragment = url.substr(pos1);
+                url = url.substr(0, pos1);
+            }
+
+            // Isolate the query string if specified in the URL
+            var pos2 = url.indexOf("?");
+            if (pos2 >= 0) {
+                query = url.substr(pos2 + 1);
+                url = url.substr(0, pos2);
+            }
+
+            // Parse the "anchor" value
+            if (e.anchor) {
+
+                // Isolate the fragment if specified in the "anchor" value (overwrites fragment from the URL)
+                var pos3 = e.anchor.indexOf("#");
+                if (pos3 >= 0) {
+                    fragment = e.anchor.substr(pos3);
+                    e.anchor = e.anchor.substr(0, pos3);
+                }
+
+                // Treat remaining anchor value as query string (append if URL also has query string)
+                if (e.anchor) {
+                    if (e.anchor.indexOf("?") === 0 || e.anchor.indexOf("&") === 0) {
+                        query = (query ? query + "&" : "") + e.anchor.substr(1);
+                    } else {
+                        query = (query ? query + "&" : "") + e.anchor;
+                    }
+                }
+
+            }
+
             var key = "00000000-0000-0000-0000-000000000000";
             var type = "url";
 
@@ -12,13 +51,19 @@
                 type = e.udi.split("/")[2];
             }
 
-            return {
+            var link = {
                 id: e.id || 0,
                 key: key,
-                url: e.url,
+                url: url + (query ? "?" + query : ""),
                 name: e.name,
                 type: type === "document" ? "content" : type
             };
+
+            if (fragment) {
+                link.fragment = fragment;
+            }
+
+            return link;
 
         },
 

@@ -48,6 +48,7 @@
 
             if (e.udi) {
                 key = e.udi.split("/")[3];
+                if (key.length === 32) key = key.substr(0, 8) + "-" + key.substr(8, 4) + "-" + key.substr(12, 4) + "-" + key.substr(16, 4) + "-" + key.substr(20, 12);
                 type = e.udi.split("/")[2];
             }
 

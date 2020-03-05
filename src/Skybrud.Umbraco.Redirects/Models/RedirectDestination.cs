@@ -12,6 +12,7 @@ namespace Skybrud.Umbraco.Redirects.Models {
     /// </summary>
     public class RedirectDestination {
 
+        private string _name;
         private string _url;
 
         #region Properties
@@ -45,7 +46,10 @@ namespace Skybrud.Umbraco.Redirects.Models {
         }
 
         [JsonProperty("name")]
-        public string Name => GetCalculatedName();
+        public string Name  {
+            get => GetCalculatedName() ?? _name;
+            private set => _name = value;
+        }
 
         /// <summary>
         /// Gets the type of the destination.
@@ -66,6 +70,12 @@ namespace Skybrud.Umbraco.Redirects.Models {
         [JsonIgnore]
         public string RawUrl { get; }
 
+        /// <summary>
+        /// Gets the fragment part of the URL, or <c>null</c> if not specified.
+        /// </summary>
+        [JsonProperty("fragment", NullValueHandling = NullValueHandling.Ignore)]
+        public string Fragment { get; }
+
         #endregion
 
         #region Constructors
@@ -76,6 +86,7 @@ namespace Skybrud.Umbraco.Redirects.Models {
             Key = destination.Key;
             RawUrl = destination.Url;
             Type = destination.Type;
+            Fragment = destination.Fragment;
         }
 
         internal RedirectDestination() { }
@@ -116,7 +127,9 @@ namespace Skybrud.Umbraco.Redirects.Models {
             Id = obj.GetInt32("id");
             Key = obj.GetGuid("key");
             RawUrl = obj.GetString("url");
-            Type = obj.GetEnum("mode", RedirectDestinationType.Url);
+            Name = obj.GetString("name");
+            Type = obj.GetEnum("type", RedirectDestinationType.Url);
+            Fragment = obj.GetString("fragment");
         }
 
         #endregion
@@ -137,7 +150,7 @@ namespace Skybrud.Umbraco.Redirects.Models {
                 case RedirectDestinationType.Media: {
                     IPublishedContent media = Current.UmbracoContext.Media.GetById(Id);
                     return media?.Name;
-                }
+                    }
             }
 
             // Use the raw URL as a fallback
